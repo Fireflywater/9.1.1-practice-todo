@@ -39,13 +39,13 @@ namespace ToDoList.Controllers
       return View(model);
     }
 
-    // This one creates new Items within a given Category, not new Categories:
     [HttpPost("/categories/{categoryId}/items")]
     public ActionResult Create(int categoryId, string itemDescription)
     {
       Dictionary<string, object> model = new Dictionary<string, object>();
       Category foundCategory = Category.Find(categoryId);
       Item newItem = new Item(itemDescription);
+      newItem.Save();    // New code
       foundCategory.AddItem(newItem);
       List<Item> categoryItems = foundCategory.Items;
       model.Add("items", categoryItems);
